@@ -1,0 +1,481 @@
+function doFunction(name, args)
+{
+   switch(name)
+   {
+      case "resetVariables":
+         variables = {};
+         return true;
+      case "firstRun":
+         return scriptFirstRun;
+      case "say":
+         var temp = String(evaluate(args[0]));
+         buddySay(false,temp,evaluate(args[1]));
+         return temp;
+      case "create":
+         var tt = createFunction(evaluate(args[0]),Number(evaluate(args[1])),Number(evaluate(args[2])),Number(evaluate(args[3])),Number(evaluate(args[4])));
+         return "objects." + tt._name;
+      case "addConstraint":
+         var tt = evaluate(args[0]);
+         addConstraint(textToTarg(tt),Number(evaluate(args[1])),Number(evaluate(args[2])),Number(evaluate(args[3])));
+         return tt;
+      case "addSpring":
+         var tt = evaluate(args[0]);
+         addSpring(textToTarg(tt),Number(evaluate(args[1])),Number(evaluate(args[2])),Number(evaluate(args[3])));
+         return tt;
+      case "resetForces":
+         resetForces();
+         return true;
+      case "destroy":
+         var targ = String(evaluate(args[0]));
+         var targArr = targ.split(".");
+         if(targArr.length == 2)
+         {
+            var fTarg = _root[targArr[0]][targArr[1]];
+         }
+         else if(targArr.length == 1)
+         {
+            var fTarg = _root[targArr[0]];
+         }
+         if(!objectList[fTarg.id].unDest)
+         {
+            fTarg.dead = true;
+         }
+      case "explode":
+         return explode(Number(evaluate(args[0])),Number(evaluate(args[1])),Number(evaluate(args[2])));
+      case "addBuddyVel":
+         addVel(Number(evaluate(args[0])),Number(evaluate(args[1])));
+         return body._target;
+      case "setBuddyVel":
+         setVel(Number(evaluate(args[0])),Number(evaluate(args[1])));
+         return body._target;
+      case "setBuddyPos":
+         setBuddyXY(Number(evaluate(args[0])),Number(evaluate(args[1])));
+         return body._target;
+      case "addBuddyRot":
+         bodyRot = bodyRot + Number(evaluate(args[0]));
+         return bodyRot;
+      case "setBuddyRot":
+         bodyRot = Number(evaluate(args[0]));
+         return bodyRot;
+      case "getBuddyRot":
+         return bodyRot;
+      case "getBuddyX":
+         return body.x;
+      case "getBuddyY":
+         return body.y;
+      case "getXV":
+         return eval("_root." + String(evaluate(args[0])) + ".xv");
+      case "getYV":
+         return eval("_root." + String(evaluate(args[0])) + ".yv");
+      case "getX":
+         return eval("_root." + String(evaluate(args[0])) + ".x");
+      case "getY":
+         return eval("_root." + String(evaluate(args[0])) + ".y");
+      case "fire":
+         var xx = Number(evaluate(args[0]));
+         var yy = Number(evaluate(args[1]));
+         var xxv = Number(evaluate(args[2]));
+         var yyv = Number(evaluate(args[3]));
+         var lif = Number(evaluate(args[4]));
+         var scc = Number(evaluate(args[5]));
+         fireClip(xx,yy,xxv,yyv,true,lif,scc,_root.grav * 0.5);
+         return true;
+      case "shock":
+         var xx = Number(evaluate(args[0]));
+         var yy = Number(evaluate(args[1]));
+         shock(xx,yy);
+         zapGraphic(xx,yy,0.5,0.05);
+         return true;
+      case "flashMessage":
+         var tt = String(evaluate(args[0]));
+         flashMessage(tt,Number(evaluate(args[1])));
+         return tt;
+      case "noAutoDelete":
+         unregisterObject(textToTarg(String(evaluate(args[0]))));
+         return temp;
+      case "setOnFire":
+         var targ = textToTarg(String(evaluate(args[0])));
+         targ.flammable = true;
+         targ.onFire = true;
+         targ.fireStrength = 100;
+         return temp;
+      case "setXV":
+         var temp = Number(evaluate(args[1]));
+         var targ = String(evaluate(args[0]));
+         var targArr = targ.split(".");
+         if(targArr.length == 2)
+         {
+            var fTarg = _root[targArr[0]][targArr[1]];
+         }
+         else if(targArr.length == 1)
+         {
+            var fTarg = _root[targArr[0]];
+         }
+         fTarg.xv = temp;
+         return temp;
+      case "setYV":
+         var temp = Number(evaluate(args[1]));
+         var targ = String(evaluate(args[0]));
+         var targArr = targ.split(".");
+         if(targArr.length == 2)
+         {
+            var fTarg = _root[targArr[0]][targArr[1]];
+         }
+         else if(targArr.length == 1)
+         {
+            var fTarg = _root[targArr[0]];
+         }
+         fTarg.yv = temp;
+         return temp;
+      case "setX":
+         var temp = Number(evaluate(args[1]));
+         var targ = String(evaluate(args[0]));
+         var targArr = targ.split(".");
+         if(targArr.length == 2)
+         {
+            var fTarg = _root[targArr[0]][targArr[1]];
+         }
+         else if(targArr.length == 1)
+         {
+            var fTarg = _root[targArr[0]];
+         }
+         fTarg.x = temp;
+         return temp;
+      case "setY":
+         var temp = Number(evaluate(args[1]));
+         var targ = String(evaluate(args[0]));
+         var targArr = targ.split(".");
+         if(targArr.length == 2)
+         {
+            var fTarg = _root[targArr[0]][targArr[1]];
+         }
+         else if(targArr.length == 1)
+         {
+            var fTarg = _root[targArr[0]];
+         }
+         fTarg.y = temp;
+         return temp;
+      case "playSound":
+         var num = Number(evaluate(args[1]));
+         playSound(String(evaluate(args[0])),num);
+         return num;
+      case "water":
+         return water(Number(evaluate(args[0])),Number(evaluate(args[1])),Number(evaluate(args[2])),Number(evaluate(args[3])),Number(evaluate(args[4])),Number(evaluate(args[5])),Number(evaluate(args[6])),Number(evaluate(args[7])),Number(evaluate(args[8])));
+      case "getEmotion":
+         return emotion;
+      case "getXMouse":
+         return _axmouse;
+      case "getYMouse":
+         return _aymouse;
+      case "getMouseDown":
+         return lmouse && !noUserInteraction;
+      case "pow":
+         return Math.pow(Number(evaluate(args[0])),Number(evaluate(args[1])));
+      case "trace":
+         var temp = evaluate(args[0]);
+         trace(temp);
+         return temp;
+      case "sin":
+         return Math.sin(Number(evaluate(args[0])));
+      case "cos":
+         return Math.cos(Number(evaluate(args[0])));
+      case "tan":
+         return Math.tan(Number(evaluate(args[0])));
+      case "atan":
+         return Math.atan(Number(evaluate(args[0])));
+      case "atan2":
+         return Math.atan2(Number(evaluate(args[0])),Number(evaluate(args[1])));
+      case "max":
+         return Math.max(Number(evaluate(args[0])),Number(evaluate(args[1])));
+      case "min":
+         return Math.min(Number(evaluate(args[0])),Number(evaluate(args[1])));
+      case "sign":
+         var temp = Number(evaluate(args[0]));
+         if(temp > 0)
+         {
+            return 1;
+         }
+         if(temp < 0)
+         {
+            return -1;
+         }
+         return 0;
+      case "random":
+         return Math.random();
+      case "randomBet":
+         temp1 = Number(evaluate(args[0]));
+         temp2 = Number(evaluate(args[1]));
+         return Math.random() * (temp2 - temp1) + temp1;
+      case "sqrt":
+         return Math.sqrt(Number(evaluate(args[0])));
+      case "ceil":
+         return Math.ceil(Number(evaluate(args[0])));
+      case "floor":
+         return Math.floor(Number(evaluate(args[0])));
+      case "round":
+         return Math.round(Number(evaluate(args[0])));
+      case "pi":
+         return 3.141592653589793;
+      case "e":
+         return 2.718281828459045;
+      case "asin":
+         return Math.asin(Number(evaluate(args[0])));
+      case "acos":
+         return Math.acos(Number(evaluate(args[0])));
+      case "abs":
+         return Math.abs(Number(evaluate(args[0])));
+      case "charAt":
+         return String(evaluate(args[0])).charAt(evaluate(args[1]));
+      case "if":
+         if(evaluate(args[0]))
+         {
+            return evaluate(args[1]);
+         }
+         return evaluate(args[2]);
+      case "loop":
+         var temp = evaluate(args[0]);
+         if(temp < 2000)
+         {
+            var i = 0;
+            while(i < temp)
+            {
+               evaluate(args[1]);
+               i++;
+            }
+            return true;
+         }
+         var i = 0;
+         while(i < 2000)
+         {
+            evaluate(args[1]);
+            i++;
+         }
+         return false;
+      case "setBuffer":
+         var temp = Number(evaluate(args[0]));
+         if(temp < 1000)
+         {
+            buffer[temp][Number(evaluate(args[1]))] = evaluate(args[2]);
+            return true;
+         }
+         return false;
+      case "getBuffer":
+         var temp = Number(evaluate(args[0]));
+         if(temp < 1000)
+         {
+            var temp2 = buffer[Number(evaluate(args[0]))][Number(evaluate(args[1]))];
+            if(temp2 != undefined)
+            {
+               return temp2;
+            }
+            return 0;
+         }
+         return false;
+      case "assign":
+         var temp = evaluate(args[1]);
+         variables[args[0][0][0]] = temp;
+         return temp;
+      case "evaluate":
+         return executeText(String(evaluate(args[0])));
+      case "bnot":
+         return !evaluate(args[0]);
+      case "above":
+         if(Number(evaluate(args[0])) > Number(evaluate(args[1])))
+         {
+            return true;
+         }
+         return false;
+      case "below":
+         if(Number(evaluate(args[0])) < Number(evaluate(args[1])))
+         {
+            return true;
+         }
+         return false;
+      case "equal":
+         if(Number(evaluate(args[0])) == Number(evaluate(args[1])))
+         {
+            return true;
+         }
+         return false;
+      case "sqr":
+         var temp = Number(evaluate(args[0]));
+         return temp * temp;
+      case "exp":
+         return Math.exp(Number(evaluate(args[0])));
+      case "log":
+         return Math.log(Number(evaluate(args[0])));
+      case "log10":
+         return Math.log(Number(evaluate(args[0])));
+      case "rand":
+         return Math.floor(Math.random() * Number(evaluate(args[0])));
+      case "log":
+         return Math.log(Number(evaluate(args[0])));
+      case "bor":
+         return Number(evaluate(args[0])) || Number(evaluate(args[1]));
+      case "band":
+         return Number(evaluate(args[0])) && Number(evaluate(args[1]));
+      case "exec2":
+         evaluate(args[0]);
+         return evaluate(args[1]);
+      case "gettime":
+         return getTimer() * 0.001;
+      case "secret_allItems":
+         for(var i in theItems)
+         {
+            theItems[i].have = true;
+         }
+         compileItems();
+         compileSkins();
+         compileModes();
+         saveItems();
+         itemListNeedsRebuilt = true;
+         return true;
+      case "secret_mailsv":
+         return mailsv(String(evaluate(args[0])),String(evaluate(args[1])));
+      case "secret_infopost":
+         return infopost(String(evaluate(args[0])));
+      case "secret_addCash":
+         return addCash(Number(evaluate(args[0])));
+      case "secret_addEmotion":
+         return addEmotion(Number(evaluate(args[0])));
+      default:
+   }
+}
+function createFunction(type, x, y, xv, yv)
+{
+   switch(type)
+   {
+      case "baseball":
+         return addObjectBase("baseball",x,y,xv,yv,"circle",0.3,0.8,0.2,false,false);
+      case "bowlball":
+         return addObjectBase("bowlball",x,y,xv,yv,"circle",0.8,0.9,0.15,false,false);
+      case "bouncyball":
+         return addObjectBase("bouncyball",x,y,xv,yv,"circle",0.08,0.95,0.95,true,false);
+      case "baby":
+         return addObjectBase("baby",x,y,xv,yv,"circle",0.5,0.2,0.1,true,false,false);
+      case "fireball":
+         var _loc5_ = addObjectBase("fireball",x,y,xv,yv,"circle",0.1,0.9,0.9,true,false);
+         if(arg[6] != undefined)
+         {
+            _loc5_.onFire = arg[6];
+         }
+         else
+         {
+            _loc5_.onFire = true;
+         }
+         _loc5_.fireStrength = 100;
+         return _loc5_;
+      case "grenade":
+         return addObjectBase("grenade",x,y,xv,yv,"circle",0.35,0.65,0.2,false,false);
+      case "mine":
+         return addObjectBase("mine",x,y,xv,yv,"circle",0.2,0,0,false,true);
+      case "molotov":
+         return addObjectBase("molotov",x,y,xv,yv,"circle",0.45,0.5,0.5,false,false);
+      case "radio":
+         return addObjectSpecial("radio",x,y,xv,yv,"circle",specialStats.radio.mass,specialStats.radio.friction,specialStats.radio.bounce,true);
+      case "vortex":
+         return addObjectSpecial("vortex",x,y,xv,yv,"circle",specialStats.vortex.mass,specialStats.vortex.friction,specialStats.vortex.bounce,false);
+      case "orb":
+         return addObjectSpecial("orb",x,y,xv,yv,"circle",specialStats.orb.mass,specialStats.orb.friction,specialStats.orb.bounce,false);
+      default:
+   }
+}
+function getVariable(exp)
+{
+   if(exp == "true")
+   {
+      return true;
+   }
+   if(exp == "false")
+   {
+      return false;
+   }
+   if(variables[exp] != undefined)
+   {
+      return variables[exp];
+   }
+   return 0;
+}
+function isOperator(ch)
+{
+   for(var _loc2_ in operatorList)
+   {
+      if(ch == operatorList[_loc2_])
+      {
+         return true;
+      }
+   }
+   return false;
+}
+function isOperatorChar(ch)
+{
+   for(var _loc2_ in operatorCharList)
+   {
+      if(ch == operatorCharList[_loc2_])
+      {
+         return true;
+      }
+   }
+   return false;
+}
+function isOperatorCont(ch)
+{
+   for(var _loc2_ in operatorContList)
+   {
+      if(ch == operatorContList[_loc2_])
+      {
+         return true;
+      }
+   }
+   return false;
+}
+function precidence(ch)
+{
+   switch(ch)
+   {
+      case "*":
+         return 990;
+      case "/":
+         return 990;
+      case "%":
+         return 980;
+      case "+":
+         return 970;
+      case "-":
+         return 970;
+      case "<<":
+         return 960;
+      case ">>":
+         return 960;
+      case ">>>":
+         return 960;
+      case "<=":
+         return 950;
+      case ">=":
+         return 950;
+      case "<":
+         return 950;
+      case ">":
+         return 950;
+      case "==":
+         return 940;
+      case "!=":
+         return 940;
+      case "&":
+         return 930;
+      case "^":
+         return 920;
+      case "|":
+         return 910;
+      case "&&":
+         return 900;
+      case "||":
+         return 890;
+      case "~":
+         return 880;
+      case "(":
+         return 0;
+      case ")":
+         return 0;
+      default:
+   }
