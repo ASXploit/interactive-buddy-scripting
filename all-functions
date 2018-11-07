@@ -58,3 +58,26 @@ gettime() returns time since movie start, in seconds
 getXMouse()
 getYMouse()
 getMouseDown()
+
+
+if(value,arg1,arg2)
+This is the if statement in ShockScript. It is actually set up like a function, but it works differently. First it evaluates 'value'. If it is true, then 'arg1' is evaluated and returned. Otherwise 'arg2' is evaluated and returned. Note that after 'value' is evaluated, either 'arg1' or 'arg2' will be evaluated, not both.
+
+loop(num,arg)
+This function evaluates 'arg' for 'num' number of times (the maximum is 2000)
+
+setBuffer(bufferNumber,position,value)
+Sets the element at 'position' of the 'bufferNumber' buffer (or array) to the 'value'. 'bufferNumber' may be any number from 0 to 1000
+
+getBuffer(bufferNumber, position)
+Returns the element at 'position' of the 'bufferNumber' buffer.
+
+assign(myVar,value)
+Same as writing 'myVar = value'. Note that the first argument of the funtion is not a string, it is the exact text that you write. You would use this function like this: assign(x,10); which would set variable 'x' to '10'.
+
+evaluate(scriptText)
+This function allows you to evaluate text as if it were ShockScript code. Example: 'evaluate("x = "+10)' would evaluate 'x = 10' and thus set variable 'x' to '10'.
+
+firstRun()
+This function returns true on the first run of your code when 'Run Every Frame' is checked, and false on every other run.
+If you click 'Run Once', it is also true for that run.
