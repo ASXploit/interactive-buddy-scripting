@@ -1,0 +1,60 @@
+say(text,time)
+explode(x,y,power) 1.0 is about normal for power
+create(objectType,x,y,xVelocity,yVelocity) valid objectType strings: "baseball", "molotov", "bowlball", "bouncyball", "grenade", "fireball", "mine", "baby", "orb", "radio", "vortex". Returns the unique objectName assigned to the object you created.
+destroy(objectName) removes specified object (if destructable)
+noAutoDelete(objectName) makes specified object not be auto deleted when adding more objects; note that it can still be destroyed through destroy() function or through a mousover when a throwing item is selected
+addConstraint(objectName,x,y,len) adds a constraint to specified target (objectName) at x, y of length len; constraint is removed when object is deleted
+addSpring(objectName,x,y,strength) similar to addConstraint, except with a flexible attachment; strength can be between 0.0-1.0, but lower numbers (like .05) work best
+resetForces() resets all added forces (constraints, springs, etc.)
+flashMessage(text, timeInFrames)
+water(x, y, xv, yv, lifeSpanInFrames, strength, spread, size, disappearOnContact)
+fireClip(x, y, xv, yv, lifeInFrames, scale) about 4.0 is normal for scale
+addBuddyVel(x,y)
+setBuddyVel(x,y)
+setBuddyPos(x,y)
+addBuddyRot(rotationAmount)
+setBuddyRot(angleRadians)
+getBuddyRot()
+getBuddyX()
+getBuddyY()
+getEmotion() returns happiness of buddy from -100.0 to 100.0
+getXV(objectName) returns x velocity of object, valid strings for objectName: "body", "rArm", "lArm", "rLeg", "lLeg", plus all strings returned by 'create' function (see ex-throwableBall)
+getYV(objectName) ... y velocty ...
+getX(name) ... x position ...
+getY(name) ... y position ...
+playSound(soundName)
+resetVariables() resets all user variables
+pow(x,y) returns x to the y power
+sin(x)
+cos(x)
+tan(x)
+atan(x)
+atan2(x,y)
+max(x,y) returns greater value
+min(x,y) returns lesser value
+sign(x) returns -1 if negative, 0 if 0, 1 if positive
+random() returns random floating point, 0.0 to 1.0
+randomBet(x,y) returns random floating point between x and y
+sqrt(x)
+ceil(x)
+floor(x)
+round(x)
+pi() returns pi (3.14159...)
+e() returns e
+asin(x)
+acos(x)
+abs(x) absolute value
+charAt(string,letterPosition)
+bnot(x) returns false if x is true, true if x is false
+bor(x,y) logical OR (same as x||y)
+band(x,y) logical AND (same as x&&y)
+above(x,y) returns true if x is greater than y, else false (same as x>y)
+below(x,y) x<y
+equal(x,y) x==y
+sqr(x) returns x*x
+exp(x) returns e to the x
+log(x)
+gettime() returns time since movie start, in seconds
+getXMouse()
+getYMouse()
+getMouseDown()
